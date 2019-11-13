@@ -266,7 +266,6 @@ Request 字段:
 
 | 字段     |     类型 |   描述   | 
 | :--------------: | :--------:| :------: |
-| txid   | String   | 交易txid    |
 | txhash   | String   | 交易txhash    |
 
 Response 字段:  
