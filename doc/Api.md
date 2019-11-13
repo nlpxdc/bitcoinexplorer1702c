@@ -228,40 +228,12 @@ Response 字段:
 
 ## 5. 交易详情
 
-URL: /transaction/getByTxid?txid={txid}  
 URL: /transaction/getByTxhash?txhash={txhash}  
 Method：GET  
 
 ResponseBody:  
 ```json
-[
-    {
-        "txhash": "bc687317ed8d5f871b21e57498ba76349bea73837ddb719fde9876d0320c8ac5",
-        "time": 1573546755,
-        "fees":0.00117600,
-        "confirmations": 123,
-        "total_input": 4.50489410,
-        "total_output": 0.00117600,
-        "txDetails":[
-            {
-                "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            },
-            {
-                "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            }
-        ],
-        "status": 0,
-        "sizeOnDisk": 249,
-        "weight": 669,
-        "blockHeight": 603516,
-        "feePerByte": 472.289,
-        "feePerWeightUnit": 175.785
-    },
-    {
+{
         "txhash": "bc687317ed8d5f871b21e57498ba76349bea73837ddb719fde9876d0320c8ac5",
         "time": 1573546755,
         "fees":0.00117600,
@@ -287,7 +259,6 @@ ResponseBody:
         "feePerByte": 472.289,
         "feePerWeightUnit": 175.785
     }
-]
 
 ```
 
