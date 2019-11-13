@@ -44,5 +44,5 @@
 | tx_detail_id  | bigint  | 主键 自增 | Id  |
 | address  | varchar(50)  | 索引  | 地址  |
 | type  | tinyint  |   | 类型（发送0、接受1）  |
-| amount  | double  |   | 金额  |
+| amount  | double  |   | 金额（正负，正接受，负发送）  |
 | transaction_id  | int  | 外键 索引 非空 | 交易id  |
