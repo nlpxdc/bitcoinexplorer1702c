@@ -125,6 +125,7 @@ Response 字段:
 ## 4. 区块详情
 
 URL: /block/getInfoByHash?blockhash={blockhash}  
+URL: /block/getInfoByHeight?height={height}  
 Method：GET  
 
 ResponseBody:  
@@ -193,6 +194,7 @@ Request 字段:
 | 字段     |     类型 |   描述   | 
 | :--------------: | :--------:| :------: |
 | blockhash   | String   | 区块hash    |
+| height   | Integer   | 区块高度    |
 
 Response 字段:  
 
@@ -223,3 +225,183 @@ Response 字段:
 | address   | array   | 地址    |
 | type   | array   | 类型（发送0，接受1）    |
 | amount   | array   | 金额    |
+
+## 5. 交易详情
+
+URL: /transaction/getByTxid?txid={txid}  
+URL: /transaction/getByTxhash?txhash={txhash}  
+Method：GET  
+
+ResponseBody:  
+```json
+[
+    {
+        "txhash": "bc687317ed8d5f871b21e57498ba76349bea73837ddb719fde9876d0320c8ac5",
+        "time": 1573546755,
+        "fees":0.00117600,
+        "confirmations": 123,
+        "total_input": 4.50489410,
+        "total_output": 0.00117600,
+        "txDetails":[
+            {
+                "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            },
+            {
+                "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            }
+        ],
+        "status": 0,
+        "sizeOnDisk": 249,
+        "weight": 669,
+        "blockHeight": 603516,
+        "feePerByte": 472.289,
+        "feePerWeightUnit": 175.785
+    },
+    {
+        "txhash": "bc687317ed8d5f871b21e57498ba76349bea73837ddb719fde9876d0320c8ac5",
+        "time": 1573546755,
+        "fees":0.00117600,
+        "confirmations": 123,
+        "total_input": 4.50489410,
+        "total_output": 0.00117600,
+        "txDetails":[
+            {
+                "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            },
+            {
+                "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            }
+        ],
+        "status": 0,
+        "sizeOnDisk": 249,
+        "weight": 669,
+        "blockHeight": 603516,
+        "feePerByte": 472.289,
+        "feePerWeightUnit": 175.785
+    }
+]
+
+```
+
+Request 字段:  
+
+| 字段     |     类型 |   描述   | 
+| :--------------: | :--------:| :------: |
+| txid   | String   | 交易txid    |
+| txhash   | String   | 交易txhash    |
+
+Response 字段:  
+
+| 字段     |     类型 |   描述   | 
+| :--------------: | :--------:| :------: |
+| txhash   | string   | 交易hash    |
+| time   | long   | 交易时间（出块时间）    |
+| fees   | double   | 交易费用    |
+| confirmations   | int   | 确认数    |
+| total_input   | double   | 总输入金额    |
+| total_output   | double   | 总输出金额    |
+| status   | enum   | 状态（确认0、未确认1）    |
+| sizeOnDisk   | int   | 字节大小    |
+| weight   | int   | 重量    |
+| blockHeight   | int   | 所属区块高度    |
+| feePerByte   | double   | 单位字节费用    |
+| feePerWeightUnit   | double   | 单位重量费用    |
+| txDetails   | array   | 交易详细    |
+| address   | string   | 地址    |
+| type   | enum   | 类型（发送0、接受1）    |
+| amount   | double   | 金额    |
+
+## 6. 地址详情
+
+URL: /address/getInfoByAddress?address={address}  
+Method：GET  
+
+ResponseBody:  
+```json
+{
+    "address":"35TVHMuueFEqZU3kwVCBwcnFhUk6Hi7sQM",
+    "format":"BASE58 (P2SH)",
+    "txSize": 2,
+    "totalReceived": 4.50489410,
+    "totalSent": 4.50489410,
+    "balance": 0.00000000,
+    "transactions":[
+        {
+            "txhash":"456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "time": 1573546755,
+            "fees": 0.00000001,
+            "totalOutput": 12.66901241,
+            "txDetail":[
+                {
+                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "type": 0,
+                    "amount": 0.01930000
+                },
+                {
+                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "type": 0,
+                    "amount": 0.01930000
+                }
+            ]
+        },
+        {
+            "txhash":"456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "time": 1573546755,
+            "fees": 0.00000001,
+            "totalOutput": 12.66901241,
+            "txDetails":[
+                {
+                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "type": 0,
+                    "amount": 0.01930000
+                },
+                {
+                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "type": 0,
+                    "amount": 0.01930000
+                }
+            ]
+        }
+    ]
+}
+
+```
+
+Request 字段:  
+
+| 字段     |     类型 |   描述   | 
+| :--------------: | :--------:| :------: |
+| address   | String   | 地址    |
+
+Response 字段:  
+
+| 字段     |     类型 |   描述   | 
+| :--------------: | :--------:| :------: |
+| address   | string   | 地址    |
+| format   | string   | 地址格式    |
+| txSize   | int   | 交易数量    |
+| totalReceived   | double   | 总收入    |
+| totalSent   | double   | 总支出    |
+| balance   | double   | 余额    |
+| transactions   | array   | 交易列表    |
+| txhash   | string   | 交易hash    |
+| time   | long   | 交易时间（出块时间）    |
+| fees   | double   | 交易费用    |
+| totalOutput   | double   | 总接受    |
+| txDetails   | array   | 交易详细    |
+| address   | string   | 地址    |
+| type   | enum   | 类型（发送0， 接受1）    |
+| amount   | double   | 金额    |
+
+## 7. 搜索
+
+URL: /misc/search?keyword={keyword}  
+Method：GET  
