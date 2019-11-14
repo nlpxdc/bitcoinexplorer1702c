@@ -1,21 +1,30 @@
 package io.cjf.bitcoinexplorerback.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.cjf.bitcoinexplorerback.client.BitcoinRest;
 import io.cjf.bitcoinexplorerback.dao.BlockMapper;
+import io.cjf.bitcoinexplorerback.dao.TransactionMapper;
 import io.cjf.bitcoinexplorerback.po.Block;
+import io.cjf.bitcoinexplorerback.po.Transaction;
 import io.cjf.bitcoinexplorerback.service.BlockService;
+import io.cjf.bitcoinexplorerback.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class BlockServiceImpl implements BlockService {
 
     @Autowired
+    private BitcoinRest bitcoinRest;
+
+    @Autowired
     private BlockMapper blockMapper;
 
     @Autowired
-    private BitcoinRest bitcoinRest;
+    private TransactionServiceImpl transactionService;
 
     @Override
     public String syncBlock(String blockhash) {
@@ -37,6 +46,16 @@ public class BlockServiceImpl implements BlockService {
         //todo calculate tx volume, fee
 
         blockMapper.insert(block);
+        Integer blockId = block.getBlockId();
+        Long time = block.getTime();
+
+        ArrayList<String> txids = (ArrayList<String>) blockJson.get("tx");
+        for (String txid : txids) {
+            transactionService.syncTransaction(txid, blockId, time);
+        }
+
+        //todo insert tx
+
 
         String nextblockhash = blockJson.getString("nextblockhash");
         return nextblockhash;

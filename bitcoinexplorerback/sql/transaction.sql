@@ -10,7 +10,7 @@ CREATE TABLE `transaction`
     `txid`                char(64) not null,
     `txhash`              char(64) not null,
     `time`                bigint   not null,
-    `amount`              double   not null,
+    `amount`              double,
     `fees`                double,
     `confirmations`       int(11),
     `status`              tinyint,
