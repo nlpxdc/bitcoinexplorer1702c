@@ -54,9 +54,6 @@ public class BlockServiceImpl implements BlockService {
             transactionService.syncTransaction(txid, blockId, time);
         }
 
-        //todo insert tx
-
-
         String nextblockhash = blockJson.getString("nextblockhash");
         return nextblockhash;
     }

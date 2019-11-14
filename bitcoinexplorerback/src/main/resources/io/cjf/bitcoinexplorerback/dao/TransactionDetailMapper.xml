@@ -21,10 +21,10 @@
     delete from transaction_detail
     where tx_detail_id = #{txDetailId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="io.cjf.bitcoinexplorerback.po.TransactionDetail">
-    insert into transaction_detail (tx_detail_id, address, type, 
+  <insert id="insert" parameterType="io.cjf.bitcoinexplorerback.po.TransactionDetail" useGeneratedKeys="true" keyProperty="txDetailId">
+    insert into transaction_detail (address, type,
       amount, transaction_id)
-    values (#{txDetailId,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+    values (#{address,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
       #{amount,jdbcType=DOUBLE}, #{transactionId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="io.cjf.bitcoinexplorerback.po.TransactionDetail">

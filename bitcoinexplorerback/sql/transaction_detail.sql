@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS `transaction_detail`;
 CREATE TABLE `transaction_detail`
 (
     `tx_detail_id`   bigint(20) NOT NULL auto_increment,
-    `address`        varchar(50),
+    `address`        varchar(100),
     `type`           tinyint,
     `amount`         double,
     `transaction_id` int        not null,
