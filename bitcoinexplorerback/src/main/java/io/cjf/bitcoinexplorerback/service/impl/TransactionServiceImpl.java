@@ -1,10 +1,13 @@
 package io.cjf.bitcoinexplorerback.service.impl;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.cjf.bitcoinexplorerback.client.BitcoinRest;
 import io.cjf.bitcoinexplorerback.dao.TransactionMapper;;
+import io.cjf.bitcoinexplorerback.enumeration.TxDetailType;
 import io.cjf.bitcoinexplorerback.po.Transaction;
+import io.cjf.bitcoinexplorerback.po.TransactionDetail;
 import io.cjf.bitcoinexplorerback.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +42,15 @@ public class TransactionServiceImpl implements TransactionService {
 
         Integer transactionId = transaction.getTransactionId();
 
-        //todo insert tx detail
         List<JSONObject> vouts = transactionJson.getJSONArray("vout").toJavaList(JSONObject.class);
         for (JSONObject vout : vouts) {
-            transactionDetailService.syncTxDetail(vout, transactionId);
+            transactionDetailService.syncTxDetailVout(vout, transactionId);
+        }
+
+        //todo insert tx detail vin
+        List<JSONObject> vins = transactionJson.getJSONArray("vin").toJavaList(JSONObject.class);
+        for (JSONObject vin : vins) {
+            transactionDetailService.syncTxDetailVin(vin, transactionId);
         }
 
     }
