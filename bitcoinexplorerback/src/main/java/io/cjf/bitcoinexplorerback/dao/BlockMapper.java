@@ -2,6 +2,8 @@ package io.cjf.bitcoinexplorerback.dao;
 
 import io.cjf.bitcoinexplorerback.po.Block;
 
+import java.util.List;
+
 public interface BlockMapper {
     int deleteByPrimaryKey(Integer blockId);
 
@@ -14,4 +16,7 @@ public interface BlockMapper {
     int updateByPrimaryKeySelective(Block record);
 
     int updateByPrimaryKey(Block record);
+
+//    custom
+    List<Block> selectRecent();
 }
