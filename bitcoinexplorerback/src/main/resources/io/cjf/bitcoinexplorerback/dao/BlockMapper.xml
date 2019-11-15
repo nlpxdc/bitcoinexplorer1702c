@@ -240,4 +240,10 @@
     from block
     order by time desc limit 10
   </select>
+  <select id="selectWithPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from block
+    order by time desc
+  </select>
 </mapper>

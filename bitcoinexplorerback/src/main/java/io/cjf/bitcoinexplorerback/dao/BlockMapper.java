@@ -1,5 +1,6 @@
 package io.cjf.bitcoinexplorerback.dao;
 
+import com.github.pagehelper.Page;
 import io.cjf.bitcoinexplorerback.po.Block;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface BlockMapper {
 
 //    custom
     List<Block> selectRecent();
+
+    Page<Block> selectWithPage();
 }

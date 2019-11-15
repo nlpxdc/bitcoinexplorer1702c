@@ -2,9 +2,12 @@ package io.cjf.bitcoinexplorerback.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import io.cjf.bitcoinexplorerback.client.BitcoinRest;
 import io.cjf.bitcoinexplorerback.dao.BlockMapper;
 import io.cjf.bitcoinexplorerback.dao.TransactionMapper;
+import io.cjf.bitcoinexplorerback.dto.PageDTO;
 import io.cjf.bitcoinexplorerback.po.Block;
 import io.cjf.bitcoinexplorerback.po.Transaction;
 import io.cjf.bitcoinexplorerback.service.BlockService;
@@ -78,6 +81,13 @@ public class BlockServiceImpl implements BlockService {
     @Override
     public List<Block> getRecent() {
         List<Block> blocks = blockMapper.selectRecent();
+        return blocks;
+    }
+
+    @Override
+    public Page<Block> getWithPage(Integer page) {
+        PageHelper.startPage(page, 20);
+        Page<Block> blocks = blockMapper.selectWithPage();
         return blocks;
     }
 }

@@ -1,5 +1,6 @@
 package io.cjf.bitcoinexplorerback.service;
 
+import com.github.pagehelper.Page;
 import io.cjf.bitcoinexplorerback.po.Block;
 import org.springframework.scheduling.annotation.Async;
 
@@ -12,4 +13,6 @@ public interface BlockService {
     void syncBlocks(String fromBlockhash);
 
     List<Block> getRecent();
+
+    Page<Block> getWithPage(Integer page);
 }
