@@ -2,6 +2,7 @@ package io.cjf.bitcoinexplorerback.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import io.cjf.bitcoinexplorerback.client.BitcoinJsonRpcImpl;
 import io.cjf.bitcoinexplorerback.client.BitcoinRest;
 import io.cjf.bitcoinexplorerback.dao.TransactionDetailMapper;
 import io.cjf.bitcoinexplorerback.enumeration.TxDetailType;
@@ -20,6 +21,9 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
 
     @Autowired
     private TransactionDetailMapper  transactionDetailMapper;
+
+    @Autowired
+    private BitcoinJsonRpcImpl bitcoinJsonRpc;
 
     @Override
     public void syncTxDetailVout(JSONObject vout, Integer transactionId) {
@@ -45,18 +49,36 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
         String txidVin = vin.getString("txid");
         Integer n = vin.getInteger("vout");
         if (txidVin != null && n != null){
-            JSONObject utxoJson = bitcoinRest.getUTXO(txidVin, n);
-            List<JSONObject> utxos = utxoJson.getJSONArray("utxos").toJavaList(JSONObject.class);
-            JSONObject utxo = utxos.get(0);
-            Double amount = utxo.getDouble("value");
-            transactionDetail.setAmount(-amount);
-            JSONObject scriptPubKey = utxo.getJSONObject("scriptPubKey");
-            JSONArray addresses = scriptPubKey.getJSONArray("addresses");
-            if (addresses != null){
-                String address = (String) addresses.get(0);
-                transactionDetail.setAddress(address);
-                transactionDetailMapper.insert(transactionDetail);
+//            JSONObject utxoJson = bitcoinRest.getUTXO(txidVin, n);
+//            List<JSONObject> utxos = utxoJson.getJSONArray("utxos").toJavaList(JSONObject.class);
+//            JSONObject utxo = utxos.get(0);
+//            Double amount = utxo.getDouble("value");
+//            transactionDetail.setAmount(-amount);
+//            JSONObject scriptPubKey = utxo.getJSONObject("scriptPubKey");
+//            JSONArray addresses = scriptPubKey.getJSONArray("addresses");
+//            if (addresses != null){
+//                String address = (String) addresses.get(0);
+//                transactionDetail.setAddress(address);
+//                transactionDetailMapper.insert(transactionDetail);
+//            }
+
+            try {
+                JSONObject transactionJson = bitcoinJsonRpc.getRawTransaction(txidVin);
+                JSONArray vouts = transactionJson.getJSONArray("vout");
+                JSONObject vout = vouts.getJSONObject(n);
+                Double amount = vout.getDouble("value");
+                transactionDetail.setAmount(-amount);
+                JSONObject scriptPubKey = vout.getJSONObject("scriptPubKey");
+                JSONArray addresses = scriptPubKey.getJSONArray("addresses");
+                if (addresses != null){
+                    String address = addresses.getString(0);
+                    transactionDetail.setAddress(address);
+                    transactionDetailMapper.insert(transactionDetail);
+                }
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
             }
+
         }
     }
 }
