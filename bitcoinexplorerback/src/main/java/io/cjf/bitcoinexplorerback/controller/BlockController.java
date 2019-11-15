@@ -6,7 +6,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import io.cjf.bitcoinexplorerback.dto.PageDTO;
 import io.cjf.bitcoinexplorerback.po.Block;
+import io.cjf.bitcoinexplorerback.po.Transaction;
+import io.cjf.bitcoinexplorerback.po.TransactionDetail;
 import io.cjf.bitcoinexplorerback.service.BlockService;
+import io.cjf.bitcoinexplorerback.service.TransactionDetailService;
+import io.cjf.bitcoinexplorerback.service.TransactionService;
 import io.cjf.bitcoinexplorerback.service.impl.BlockServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +27,12 @@ public class BlockController {
 
     @Autowired
     private BlockService blockService;
+
+    @Autowired
+    private TransactionService transactionService;
+
+    @Autowired
+    private TransactionDetailService transactionDetailService;
 
     @GetMapping("/getRecent")
     public List<JSONObject> getRecent(){
@@ -63,7 +73,52 @@ public class BlockController {
 
     @GetMapping("/getInfoByHash")
     public JSONObject getInfoByHash(@RequestParam String blockhash){
-        return null;
+        //todo add tx page
+
+        JSONObject blockInfoJson = new JSONObject();
+
+        Block block = blockService.getByBlockhash(blockhash);
+        blockInfoJson.put("blockhash",block.getBlockhash());
+        blockInfoJson.put("confirmations",null);
+        blockInfoJson.put("time",block.getTime());
+        blockInfoJson.put("height",block.getHeight());
+        blockInfoJson.put("miner",block.getMiner());
+        blockInfoJson.put("txSize",block.getTxsize());
+        blockInfoJson.put("difficulty",block.getDifficulty());
+        blockInfoJson.put("merkleroot",block.getMerkleRoot());
+        blockInfoJson.put("version",block.getVersion());
+        blockInfoJson.put("bits",block.getBits());
+        blockInfoJson.put("weight",block.getWeight());
+        blockInfoJson.put("sizeOnDisk",block.getSizeondisk());
+        //todo nonce negative
+        blockInfoJson.put("nonce",block.getNonce());
+        blockInfoJson.put("txVol",block.getTransactionVolume());
+        blockInfoJson.put("blockReward",block.getBlockReward());
+        blockInfoJson.put("feeReward",block.getFeeReward());
+
+        List<Transaction> transactions = transactionService.getByBlockId(block.getBlockId());
+        List<JSONObject> txJsons = transactions.stream().map(tx -> {
+            JSONObject txJson = new JSONObject();
+            txJson.put("txid", tx.getTxid());
+            txJson.put("txhash", tx.getTxhash());
+            txJson.put("time", tx.getTime());
+            txJson.put("fees", tx.getFees());
+            txJson.put("totalOutput", tx.getTotalOutput());
+
+            List<TransactionDetail> txDetails = transactionDetailService.getByTransactionId(tx.getTransactionId());
+            List<JSONObject> txDetailJsons = txDetails.stream().map(txDetail -> {
+                JSONObject txDetailJson = new JSONObject();
+                txDetailJson.put("address", txDetail.getAddress());
+                txDetailJson.put("type", txDetail.getType());
+                txDetailJson.put("amount", Math.abs(txDetail.getAmount()));
+                return txDetailJson;
+            }).collect(Collectors.toList());
+            txJson.put("txDetails", txDetailJsons);
+            return txJson;
+        }).collect(Collectors.toList());
+        blockInfoJson.put("transactions",txJsons);
+
+        return blockInfoJson;
     }
 
     @GetMapping("/getInfoByHeight")

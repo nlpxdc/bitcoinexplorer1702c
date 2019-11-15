@@ -1,6 +1,9 @@
 package io.cjf.bitcoinexplorerback.dao;
 
 import io.cjf.bitcoinexplorerback.po.TransactionDetail;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TransactionDetailMapper {
     int deleteByPrimaryKey(Long txDetailId);
@@ -14,4 +17,7 @@ public interface TransactionDetailMapper {
     int updateByPrimaryKeySelective(TransactionDetail record);
 
     int updateByPrimaryKey(TransactionDetail record);
+
+//    custom
+    List<TransactionDetail> selectByTransactionId(@Param("transactionId") Integer transactionId);
 }

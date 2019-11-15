@@ -1,6 +1,9 @@
 package io.cjf.bitcoinexplorerback.dao;
 
 import io.cjf.bitcoinexplorerback.po.Transaction;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TransactionMapper {
     int deleteByPrimaryKey(Integer transactionId);
@@ -14,4 +17,8 @@ public interface TransactionMapper {
     int updateByPrimaryKeySelective(Transaction record);
 
     int updateByPrimaryKey(Transaction record);
+
+//    custom
+
+    List<Transaction> selectByBlockId(@Param("blockId") Integer blockId);
 }

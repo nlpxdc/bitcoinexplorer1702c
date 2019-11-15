@@ -90,4 +90,10 @@ public class BlockServiceImpl implements BlockService {
         Page<Block> blocks = blockMapper.selectWithPage();
         return blocks;
     }
+
+    @Override
+    public Block getByBlockhash(String blockhash) {
+        Block block = blockMapper.selectByBlockhash(blockhash);
+        return block;
+    }
 }

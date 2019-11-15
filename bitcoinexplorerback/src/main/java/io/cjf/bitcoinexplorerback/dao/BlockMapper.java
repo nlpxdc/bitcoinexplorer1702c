@@ -2,6 +2,7 @@ package io.cjf.bitcoinexplorerback.dao;
 
 import com.github.pagehelper.Page;
 import io.cjf.bitcoinexplorerback.po.Block;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface BlockMapper {
     List<Block> selectRecent();
 
     Page<Block> selectWithPage();
+
+    Block selectByBlockhash(@Param("blockhash") String blockhash);
 }

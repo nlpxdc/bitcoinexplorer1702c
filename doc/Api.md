@@ -153,7 +153,7 @@ ResponseBody:
             "time": 1573546755,
             "fees": 0.00000001,
             "totalOutput": 12.66901241,
-            "txDetail":[
+            "txDetails":[
                 {
                     "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
                     "type": 0,
