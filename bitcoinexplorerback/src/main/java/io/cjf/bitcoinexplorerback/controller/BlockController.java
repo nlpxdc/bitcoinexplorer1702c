@@ -73,7 +73,6 @@ public class BlockController {
 
     @GetMapping("/getInfoByHash")
     public JSONObject getInfoByHash(@RequestParam String blockhash){
-        //todo add tx page
 
         JSONObject blockInfoJson = new JSONObject();
 
@@ -95,28 +94,6 @@ public class BlockController {
         blockInfoJson.put("txVol",block.getTransactionVolume());
         blockInfoJson.put("blockReward",block.getBlockReward());
         blockInfoJson.put("feeReward",block.getFeeReward());
-
-        List<Transaction> transactions = transactionService.getByBlockId(block.getBlockId());
-        List<JSONObject> txJsons = transactions.stream().map(tx -> {
-            JSONObject txJson = new JSONObject();
-            txJson.put("txid", tx.getTxid());
-            txJson.put("txhash", tx.getTxhash());
-            txJson.put("time", tx.getTime());
-            txJson.put("fees", tx.getFees());
-            txJson.put("totalOutput", tx.getTotalOutput());
-
-            List<TransactionDetail> txDetails = transactionDetailService.getByTransactionId(tx.getTransactionId());
-            List<JSONObject> txDetailJsons = txDetails.stream().map(txDetail -> {
-                JSONObject txDetailJson = new JSONObject();
-                txDetailJson.put("address", txDetail.getAddress());
-                txDetailJson.put("type", txDetail.getType());
-                txDetailJson.put("amount", Math.abs(txDetail.getAmount()));
-                return txDetailJson;
-            }).collect(Collectors.toList());
-            txJson.put("txDetails", txDetailJsons);
-            return txJson;
-        }).collect(Collectors.toList());
-        blockInfoJson.put("transactions",txJsons);
 
         return blockInfoJson;
     }

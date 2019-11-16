@@ -1,5 +1,6 @@
 package io.cjf.bitcoinexplorerback.dao;
 
+import com.github.pagehelper.Page;
 import io.cjf.bitcoinexplorerback.po.Transaction;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,6 @@ public interface TransactionMapper {
 //    custom
 
     List<Transaction> selectByBlockId(@Param("blockId") Integer blockId);
+
+    Page<Transaction> selectByBlockIdWithPage(@Param("blockId") Integer blockId);
 }

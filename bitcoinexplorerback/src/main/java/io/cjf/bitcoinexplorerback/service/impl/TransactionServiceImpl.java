@@ -3,7 +3,10 @@ package io.cjf.bitcoinexplorerback.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import io.cjf.bitcoinexplorerback.client.BitcoinRest;
+import io.cjf.bitcoinexplorerback.constants.PageConfig;
 import io.cjf.bitcoinexplorerback.dao.TransactionMapper;;
 import io.cjf.bitcoinexplorerback.enumeration.TxDetailType;
 import io.cjf.bitcoinexplorerback.po.Transaction;
@@ -58,6 +61,13 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getByBlockId(Integer blockId) {
         List<Transaction> transactions = transactionMapper.selectByBlockId(blockId);
+        return transactions;
+    }
+
+    @Override
+    public Page<Transaction> getByBlockIdWithPage(Integer blockId, Integer page) {
+        PageHelper.startPage(page, PageConfig.PAGE_SIZE);
+        Page<Transaction> transactions = transactionMapper.selectByBlockIdWithPage(blockId);
         return transactions;
     }
 }
