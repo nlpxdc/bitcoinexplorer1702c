@@ -122,7 +122,7 @@ Response 字段:
 | amountBTC   | double   | 金额（BTC）    |
 | amountUSD   | double   | 金额（美元）    |
 
-## 4. 区块详情
+## 4.1 区块详情
 
 URL: /block/getInfoByHash?blockhash={blockhash}  
 URL: /block/getInfoByHeight?height={height}  
@@ -146,45 +146,7 @@ ResponseBody:
     "nonce": 355265745,
     "txVol": 4912.68140588,
     "blockReward": 12.50000000,
-    "feeReward": 0.16901241,
-    "transactions":[
-        {
-            "txhash":"456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
-            "time": 1573546755,
-            "fees": 0.00000001,
-            "totalOutput": 12.66901241,
-            "txDetails":[
-                {
-                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
-                    "amount": 0.01930000
-                },
-                {
-                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
-                    "amount": 0.01930000
-                }
-            ]
-        },
-        {
-            "txhash":"456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
-            "time": 1573546755,
-            "fees": 0.00000001,
-            "totalOutput": 12.66901241,
-            "txDetails":[
-                {
-                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
-                    "amount": 0.01930000
-                },
-                {
-                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
-                    "amount": 0.01930000
-                }
-            ]
-        }
-    ]
+    "feeReward": 0.16901241
 }
 
 ```
@@ -216,7 +178,67 @@ Response 字段:
 | txVol   | double   | 交易总额    |
 | blockReward   | double   | 出块奖励    |
 | feeReward   | double   | 交易费用    |
-| transactions   | array   | 交易列表    |
+
+
+## 4.2 区块交易列表
+
+URL: /transaction/getByBlockhashWithPage?blockhash={blockhash}&page={page}   
+Method：GET  
+
+ResponseBody:  
+```json
+[
+    {
+        "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+        "time": 1573546755,
+        "fees": 0.00000001,
+        "totalOutput": 12.66901241,
+        "txDetails": [
+            {
+                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            },
+            {
+                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            }
+        ]
+    },
+    {
+        "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+        "time": 1573546755,
+        "fees": 0.00000001,
+        "totalOutput": 12.66901241,
+        "txDetails": [
+            {
+                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            },
+            {
+                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            }
+        ]
+    }
+]
+
+```
+
+Request 字段:  
+
+| 字段     |     类型 |   描述   | 
+| :--------------: | :--------:| :------: |
+| blockhash   | String   | 区块hash    |
+| page   | Integer   | 页码    |
+
+Response 字段:  
+
+| 字段     |     类型 |   描述   | 
+| :--------------: | :--------:| :------: |
 | txhash   | String   | 交易hash    |
 | time   | Long   | 交易时间（出块时间）    |
 | fees   | double   | 交易费用    |
