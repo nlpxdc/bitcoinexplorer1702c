@@ -221,4 +221,10 @@
     from transaction
     where block_id = #{blockId}
   </select>
+  <select id="selectByTxid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from transaction
+    where txid = #{txid}
+  </select>
 </mapper>

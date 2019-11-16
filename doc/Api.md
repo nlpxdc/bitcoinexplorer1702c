@@ -250,7 +250,7 @@ Response 字段:
 
 ## 5. 交易详情
 
-URL: /transaction/getByTxhash?txhash={txhash}  
+URL: /transaction/getByTxid?txid={txid}  
 Method：GET  
 
 ResponseBody:  
