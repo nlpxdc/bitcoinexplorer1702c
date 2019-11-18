@@ -67,7 +67,20 @@ public class TransactionController {
         Block block = blockService.getByBlockhash(blockhash);
         Integer blockId = block.getBlockId();
         Page<Transaction> pageTx = transactionService.getByBlockIdWithPage(blockId, page);
+        PageDTO<JSONObject> pageDTO = getPageDTOByPageTx(pageTx);
+        return pageDTO;
 
+    }
+
+    @GetMapping("/getByAddressWithPage")
+    public PageDTO<JSONObject> getByAddressWithPage(@RequestParam String address,
+                                                    @RequestParam(required = false, defaultValue = "1") Integer page){
+        Page<Transaction> pageTx = transactionService.getTransactionByAddressWithPage(address, page);
+        PageDTO<JSONObject> pageDTO = getPageDTOByPageTx(pageTx);
+        return pageDTO;
+    }
+
+    private PageDTO<JSONObject> getPageDTOByPageTx(Page<Transaction> pageTx){
         List<JSONObject> txJsons = pageTx.stream().map(tx -> {
             JSONObject txJson = new JSONObject();
             txJson.put("txid", tx.getTxid());
@@ -96,7 +109,6 @@ public class TransactionController {
         pageDTO.setList(txJsons);
 
         return pageDTO;
-
     }
 
 }

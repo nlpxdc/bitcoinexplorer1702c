@@ -1,5 +1,7 @@
 package io.cjf.bitcoinexplorerback.dao;
 
+import com.github.pagehelper.Page;
+import io.cjf.bitcoinexplorerback.po.Transaction;
 import io.cjf.bitcoinexplorerback.po.TransactionDetail;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,4 +28,5 @@ public interface TransactionDetailMapper {
     Double selectReceiveByAddress(@Param("address") String address);
 
     Double selectSendByAddress(@Param("address") String address);
+
 }
