@@ -311,7 +311,7 @@ Response 字段:
 | type   | enum   | 类型（发送0、接受1）    |
 | amount   | double   | 金额    |
 
-## 6. 地址详情
+## 6.1 地址详情
 
 URL: /address/getInfoByAddress?address={address}  
 Method：GET  
@@ -324,45 +324,7 @@ ResponseBody:
     "txSize": 2,
     "totalReceived": 4.50489410,
     "totalSent": 4.50489410,
-    "balance": 0.00000000,
-    "transactions":[
-        {
-            "txhash":"456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
-            "time": 1573546755,
-            "fees": 0.00000001,
-            "totalOutput": 12.66901241,
-            "txDetail":[
-                {
-                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
-                    "amount": 0.01930000
-                },
-                {
-                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
-                    "amount": 0.01930000
-                }
-            ]
-        },
-        {
-            "txhash":"456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
-            "time": 1573546755,
-            "fees": 0.00000001,
-            "totalOutput": 12.66901241,
-            "txDetails":[
-                {
-                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
-                    "amount": 0.01930000
-                },
-                {
-                    "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
-                    "amount": 0.01930000
-                }
-            ]
-        }
-    ]
+    "balance": 0.00000000
 }
 
 ```
@@ -383,7 +345,67 @@ Response 字段:
 | totalReceived   | double   | 总收入    |
 | totalSent   | double   | 总支出    |
 | balance   | double   | 余额    |
-| transactions   | array   | 交易列表    |
+
+
+## 6.2 地址交易列表
+
+URL: /transaction/getByAddressWithPage?address={address}&page={page}   
+Method：GET  
+
+ResponseBody:  
+```json
+[
+    {
+        "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+        "time": 1573546755,
+        "fees": 0.00000001,
+        "totalOutput": 12.66901241,
+        "txDetail": [
+            {
+                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            },
+            {
+                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            }
+        ]
+    },
+    {
+        "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+        "time": 1573546755,
+        "fees": 0.00000001,
+        "totalOutput": 12.66901241,
+        "txDetails": [
+            {
+                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            },
+            {
+                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                "type": 0,
+                "amount": 0.01930000
+            }
+        ]
+    }
+]
+
+```
+
+Request 字段:  
+
+| 字段     |     类型 |   描述   | 
+| :--------------: | :--------:| :------: |
+| address   | String   | 地址    |
+| page   | Integer   | 页码    |
+
+Response 字段:  
+
+| 字段     |     类型 |   描述   | 
+| :--------------: | :--------:| :------: |
 | txhash   | string   | 交易hash    |
 | time   | long   | 交易时间（出块时间）    |
 | fees   | double   | 交易费用    |
