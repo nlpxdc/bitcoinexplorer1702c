@@ -22,4 +22,8 @@ public interface TransactionDetailMapper {
     List<TransactionDetail> selectByTransactionId(@Param("transactionId") Integer transactionId);
 
     Integer selectTotalByAddress(@Param("address") String address);
+
+    Double selectReceiveByAddress(@Param("address") String address);
+
+    Double selectSendByAddress(@Param("address") String address);
 }

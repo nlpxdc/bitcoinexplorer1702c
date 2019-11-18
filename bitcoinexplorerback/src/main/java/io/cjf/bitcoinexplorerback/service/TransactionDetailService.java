@@ -13,4 +13,8 @@ public interface TransactionDetailService {
     List<TransactionDetail> getByTransactionId(Integer transactionId);
 
     Integer getTotalByAddress(String address);
+
+    Double getReceiveByAddres(String address);
+
+    Double getSendByAddress(String address);
 }
