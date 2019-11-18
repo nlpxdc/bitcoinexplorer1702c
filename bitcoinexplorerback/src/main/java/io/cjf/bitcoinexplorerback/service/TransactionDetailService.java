@@ -11,4 +11,6 @@ public interface TransactionDetailService {
     void syncTxDetailVin(JSONObject vin, Integer transactionId);
 
     List<TransactionDetail> getByTransactionId(Integer transactionId);
+
+    Integer getTotalByAddress(String address);
 }

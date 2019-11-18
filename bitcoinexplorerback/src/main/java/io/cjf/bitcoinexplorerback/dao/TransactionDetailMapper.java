@@ -20,4 +20,6 @@ public interface TransactionDetailMapper {
 
 //    custom
     List<TransactionDetail> selectByTransactionId(@Param("transactionId") Integer transactionId);
+
+    Integer selectTotalByAddress(@Param("address") String address);
 }
