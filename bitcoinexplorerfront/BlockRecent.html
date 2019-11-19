@@ -17,7 +17,9 @@
             </el-table-column>
             <el-table-column prop="blockhash" label="Hash" width="400">
                 <template slot-scope="scope">
-                    <div class="blockhash">{{scope.row.blockhash}}</div>
+                    <div class="blockhash">
+                        {{'0..' + scope.row.blockhash.substr(12)}}
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column prop="fornow" label="Mined">
