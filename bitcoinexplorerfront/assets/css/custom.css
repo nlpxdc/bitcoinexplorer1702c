@@ -19,7 +19,7 @@
     line-height: 160px;
 }
 
-body > .el-container {
+body>.el-container {
     margin-bottom: 40px;
 }
 
@@ -29,4 +29,10 @@ body > .el-container {
 
 .el-container:nth-child(7) .el-aside {
     line-height: 320px;
+}
+
+.blockhash {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
