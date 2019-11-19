@@ -11,12 +11,12 @@
 
 <body>
     <div id="app">
-        <el-table :data="blocks" style="width: 100%">
+        <el-table :data="newBlocks" style="width: 100%">
             <el-table-column prop="height" label="Height">
             </el-table-column>
             <el-table-column prop="blockhash" label="Hash">
             </el-table-column>
-            <el-table-column prop="time" label="Mined">
+            <el-table-column prop="fornow" label="Mined">
             </el-table-column>
             <el-table-column prop="miner" label="Miner">
             </el-table-column>
@@ -28,6 +28,7 @@
         </el-table>
     </div>
 
+    <script src="assets/js/moment.min.js"></script>    
     <script src="assets/js/axios.min.js"></script>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/vue.js"></script>

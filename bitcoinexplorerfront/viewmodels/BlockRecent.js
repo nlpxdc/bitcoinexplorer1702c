@@ -3,7 +3,16 @@ var app = new Vue({
     data: {
         blocks: []
     },
-    mounted(){
+    computed: {
+        newBlocks() {
+            return this.blocks.map(block => {
+                var newBlock = block;
+                newBlock.fornow = moment.unix(block.time).fromNow();
+                return newBlock;
+            });
+        }
+    },
+    mounted() {
         this.getRecentBlocks();
     },
     methods: {
