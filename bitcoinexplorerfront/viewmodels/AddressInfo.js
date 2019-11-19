@@ -2,19 +2,22 @@ var app = new Vue({
     el: '#app',
     data: {
         address: '',
-        addressInfo: ''
+        addressInfo: '',
+        page: 1,
+        txPageinfo: ''
     },
-    mounted(){
+    mounted() {
         console.log('view mounted');
 
         var url = new URL(location.href);
         this.address = url.searchParams.get("address");
-        if(!this.address){
+        if (!this.address) {
             alert('address null');
             return;
         }
 
         this.getAddressInfoByAddress();
+        this.getTransactionsByAddress();
     },
     methods: {
         getAddressInfoByAddress() {
@@ -26,6 +29,21 @@ var app = new Vue({
                 .then(function (response) {
                     console.log(response);
                     app.addressInfo = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        getTransactionsByAddress() {
+            axios.get('/transaction/getByAddressWithPage', {
+                params: {
+                    address: this.address,
+                    page: this.page
+                }
+            })
+                .then(function (response) {
+                    console.log(response);
+                    app.txPageinfo = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);

@@ -43,7 +43,7 @@ ResponseBody:
     "total": 5678,
     "pageSize": 30,
     "currentPage": 2,
-    "blocks":[
+    "list":[
         {
             "height": 603421,
             "blockhash": "000000000000000000035134b00546a977c51bf1bc9f8abd71fb23f189497419",
@@ -77,6 +77,7 @@ Response 字段:
 | total   | Integer   | 总数    |
 | pageSize   | Integer   | 每页大小    |
 | currentPage   | Integer   | 当前页    |
+| list   | array   | 数据部分    |
 | height   | Integer   | 区块高度    |
 | blockhash   | String   | 区块hash    |
 | time   | Long   | 出块时间    |
@@ -354,44 +355,51 @@ Method：GET
 
 ResponseBody:  
 ```json
-[
-    {
-        "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
-        "time": 1573546755,
-        "fees": 0.00000001,
-        "totalOutput": 12.66901241,
-        "txDetail": [
-            {
-                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            },
-            {
-                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            }
-        ]
-    },
-    {
-        "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
-        "time": 1573546755,
-        "fees": 0.00000001,
-        "totalOutput": 12.66901241,
-        "txDetails": [
-            {
-                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            },
-            {
-                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            }
-        ]
-    }
-]
+{
+    "total": 5678,
+    "pageSize": 30,
+    "currentPage": 2,
+    "list": [
+        {
+            "txid": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "time": 1573546755,
+            "fees": 0.00000001,
+            "totalOutput": 12.66901241,
+            "txDetail": [
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "type": 0,
+                    "amount": 0.01930000
+                },
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "type": 0,
+                    "amount": 0.01930000
+                }
+            ]
+        },
+        {
+            "txid": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "time": 1573546755,
+            "fees": 0.00000001,
+            "totalOutput": 12.66901241,
+            "txDetails": [
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "type": 0,
+                    "amount": 0.01930000
+                },
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "type": 0,
+                    "amount": 0.01930000
+                }
+            ]
+        }
+    ]
+}
 
 ```
 
@@ -406,6 +414,10 @@ Response 字段:
 
 | 字段     |     类型 |   描述   | 
 | :--------------: | :--------:| :------: |
+| total   | Integer   | 总数    |
+| pageSize   | Integer   | 每页大小    |
+| currentPage   | Integer   | 当前页    |
+| list   | array   | 数据部分    |
 | txhash   | string   | 交易hash    |
 | time   | long   | 交易时间（出块时间）    |
 | fees   | double   | 交易费用    |
