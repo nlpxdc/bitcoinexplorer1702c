@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableFeignClients
 @MapperScan("io.cjf.bitcoinexplorerback.dao")
-//@EnableScheduling
+@EnableScheduling
 @EnableAsync
 public class BitcoinexplorerbackApplication {
 
