@@ -3,8 +3,10 @@ var app = new Vue({
     data: {
         blockhash: '',
         block: '',
+        page: 1,
+        txPageinfo: ''
     },
-    mounted(){
+    mounted() {
         console.log('view mounted');
 
         var url = new URL(location.href);
@@ -15,6 +17,7 @@ var app = new Vue({
         }
 
         this.getBlockByBlockhash();
+        this.getTransactionsByBlockhash();
 
     },
     methods: {
@@ -31,6 +34,26 @@ var app = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        getTransactionsByBlockhash() {
+            axios.get('/transaction/getByBlockhashWithPage', {
+                params: {
+                    blockhash: this.blockhash,
+                    page: this.page
+                }
+            })
+                .then(function (response) {
+                    console.log(response);
+                    app.txPageinfo = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        handleCurrentChange(val){
+            console.log('current change');
+            this.page = val;
+            this.getTransactionsByBlockhash();
         }
     }
 })
