@@ -41,6 +41,7 @@ var app = new Vue({
                 })
                 .catch(function (error) {
                     console.log(error);
+                    alert('error, pls check ur parameters');
                 });
         },
         getTransactionsByAddress() {
@@ -58,7 +59,7 @@ var app = new Vue({
                     console.log(error);
                 });
         },
-        handleCurrentChange(val){
+        handleCurrentChange(val) {
             console.log('current change');
             this.page = val;
             this.getTransactionsByAddress();
