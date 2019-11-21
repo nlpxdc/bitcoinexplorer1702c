@@ -96,4 +96,11 @@ public class BlockServiceImpl implements BlockService {
         Block block = blockMapper.selectByBlockhash(blockhash);
         return block;
     }
+
+    @Override
+    public String getBlockhashByHeight(Integer height) {
+        JSONObject blockJson = bitcoinRest.getBlockhashByHeight(height);
+        String blockhash = blockJson.getString("blockhash");
+        return blockhash;
+    }
 }

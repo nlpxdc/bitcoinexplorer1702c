@@ -96,8 +96,9 @@ public class BlockController {
         return blockInfoJson;
     }
 
-    @GetMapping("/getInfoByHeight")
-    public JSONObject getInfoByHeight(@RequestParam Integer height){
-        return null;
+    @GetMapping("/getBlockhashByHeight")
+    public String getInfoByHeight(@RequestParam Integer height){
+        String blockhash = blockService.getBlockhashByHeight(height);
+        return blockhash;
     }
 }
