@@ -57,6 +57,11 @@ var app = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        handleCurrentChange(val){
+            console.log('current change');
+            this.page = val;
+            this.getTransactionsByAddress();
         }
     }
 })

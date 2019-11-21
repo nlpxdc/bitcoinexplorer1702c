@@ -35,7 +35,8 @@
         <br>
         <br>
 
-
+        <el-pagination layout="prev, pager, next" :total="txPageinfo.total" :page-size="txPageinfo.pageSize" @current-change="handleCurrentChange">
+        </el-pagination>
 
         <div v-for="tx in txPageinfo.list">
 
