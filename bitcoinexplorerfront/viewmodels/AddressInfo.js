@@ -16,6 +16,15 @@ var app = new Vue({
             return;
         }
 
+        var qrcode = new QRCode("AddressQRCode", {
+            text: this.address,
+            width: 128,
+            height: 128,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
         this.getAddressInfoByAddress();
         this.getTransactionsByAddress();
     },
