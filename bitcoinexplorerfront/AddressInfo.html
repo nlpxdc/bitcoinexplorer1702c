@@ -27,7 +27,10 @@
         <el-divider></el-divider>
         Total Sent: {{addressInfo.totalSent}}
         <el-divider></el-divider>
-        Final Balance: {{addressInfo.balance}}
+
+        <el-popover placement="top-start" width="200" trigger="hover" content="This is Address Blance">
+            <div slot="reference">Final Balance: {{addressInfo.balance}}</div>
+        </el-popover>
         <el-divider></el-divider>
 
 
@@ -35,7 +38,8 @@
         <br>
         <br>
 
-        <el-pagination layout="prev, pager, next" :total="txPageinfo.total" :page-size="txPageinfo.pageSize" @current-change="handleCurrentChange">
+        <el-pagination layout="prev, pager, next" :total="txPageinfo.total" :page-size="txPageinfo.pageSize"
+            @current-change="handleCurrentChange">
         </el-pagination>
 
         <div v-for="tx in txPageinfo.list">
