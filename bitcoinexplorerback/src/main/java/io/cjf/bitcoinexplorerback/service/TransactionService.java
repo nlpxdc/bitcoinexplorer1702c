@@ -1,5 +1,6 @@
 package io.cjf.bitcoinexplorerback.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import io.cjf.bitcoinexplorerback.po.Transaction;
 
@@ -15,4 +16,6 @@ public interface TransactionService {
     Transaction getByTxid(String txid);
 
     Page<Transaction> getTransactionByAddressWithPage(String address, Integer page);
+
+    void pushNewMempoolTxes();
 }

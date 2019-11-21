@@ -12,12 +12,21 @@ import io.cjf.bitcoinexplorerback.enumeration.TxDetailType;
 import io.cjf.bitcoinexplorerback.po.Transaction;
 import io.cjf.bitcoinexplorerback.po.TransactionDetail;
 import io.cjf.bitcoinexplorerback.service.TransactionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private BitcoinRest bitcoinRest;
@@ -27,6 +36,13 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private TransactionDetailServiceImpl transactionDetailService;
+
+    private JSONObject originMempoolTx = new JSONObject();
+
+    private List<JSONObject> deltaTxes = new LinkedList<>();
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     @Override
     public void syncTransaction(String txid, Integer blockId, Long time) {
@@ -82,5 +98,52 @@ public class TransactionServiceImpl implements TransactionService {
         PageHelper.startPage(page, PageConfig.PAGE_SIZE);
         Page<Transaction> transactions = transactionMapper.selectTransactionByAddress(address);
         return transactions;
+    }
+
+    @Override
+    public void pushNewMempoolTxes() {
+
+        logger.info("begin sync mempool tx");
+
+        JSONObject newMempoolTx = bitcoinRest.getMempoolContents();
+
+        int originSize = originMempoolTx.size();
+        int newSize = newMempoolTx.size();
+        if (newSize <= originSize){
+            return ;
+        }
+
+        for (Map.Entry<String, Object> entry : newMempoolTx.entrySet()) {
+            String key = entry.getKey();
+            if (!originMempoolTx.containsKey(key)){
+                JSONObject addJson = newMempoolTx.getJSONObject(key);
+                addJson.put("txid", key);
+                deltaTxes.add(addJson);
+            }
+        }
+
+        //todo push delta tx
+        logger.info("delta tx: {}", deltaTxes);
+        logger.info("delta size: {}", deltaTxes.size());
+
+        List<JSONObject> deltaTxesJsons = deltaTxes.stream().map(t -> {
+            JSONObject tJson = new JSONObject();
+            tJson.put("txid", t.getString("txid"));
+            tJson.put("wtxid", t.getString("wtxid"));
+            tJson.put("time", t.getLong("time"));
+            //todo calculate amount
+
+            return tJson;
+        }).collect(Collectors.toList());
+        List<JSONObject> sortedDeltaTxesJsons = deltaTxesJsons.stream().sorted((t1, t2) -> {
+            return (int)(t2.getLong("time") - t1.getLong("time"));
+        }).collect(Collectors.toList());
+        simpMessagingTemplate.convertAndSend("/bitcoin/deltaTx", sortedDeltaTxesJsons);
+
+        deltaTxes = new LinkedList<>();
+        originMempoolTx = newMempoolTx;
+
+        logger.info("end sync mempool tx");
+
     }
 }
