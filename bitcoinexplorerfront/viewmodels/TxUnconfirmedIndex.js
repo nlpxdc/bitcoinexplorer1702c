@@ -16,7 +16,10 @@ var app = new Vue({
             this.stompclient.connect({}, frame => {
                 console.log(frame);
                 this.stompclient.subscribe('/bitcoin/deltaTx', function (data) {
-                    console.log(data)
+                    console.log(data);
+                    var newTransactions = JSON.parse(data.body);
+                    app.transactions = newTransactions.concat(app.transactions);
+                    //[...newTransactions, ...this.transactions];  spread syntax
                 });
             });
 
