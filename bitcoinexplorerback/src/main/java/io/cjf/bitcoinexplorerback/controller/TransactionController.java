@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import io.cjf.bitcoinexplorerback.constants.PageConfig;
 import io.cjf.bitcoinexplorerback.dto.PageDTO;
+import io.cjf.bitcoinexplorerback.enumeration.TxDetailType;
 import io.cjf.bitcoinexplorerback.po.Block;
 import io.cjf.bitcoinexplorerback.po.Transaction;
 import io.cjf.bitcoinexplorerback.po.TransactionDetail;
@@ -13,6 +14,7 @@ import io.cjf.bitcoinexplorerback.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,14 +90,32 @@ public class TransactionController {
             txJson.put("totalOutput", tx.getTotalOutput());
 
             List<TransactionDetail> txDetails = transactionDetailService.getByTransactionId(tx.getTransactionId());
-            List<JSONObject> txDetailJsons = txDetails.stream().map(txDetail -> {
+//            List<JSONObject> txDetailJsons = txDetails.stream().map(txDetail -> {
+//                JSONObject txDetailJson = new JSONObject();
+//                txDetailJson.put("address", txDetail.getAddress());
+//                txDetailJson.put("type", txDetail.getType());
+//                txDetailJson.put("amount", Math.abs(txDetail.getAmount()));
+//                return txDetailJson;
+//            }).collect(Collectors.toList());
+//            txJson.put("txDetails", txDetailJsons);
+
+            LinkedList<JSONObject> sendDetails = new LinkedList<>();
+            LinkedList<JSONObject> receiveDetails = new LinkedList<>();
+            for (TransactionDetail txDetail : txDetails) {
                 JSONObject txDetailJson = new JSONObject();
                 txDetailJson.put("address", txDetail.getAddress());
-                txDetailJson.put("type", txDetail.getType());
-                txDetailJson.put("amount", Math.abs(txDetail.getAmount()));
-                return txDetailJson;
-            }).collect(Collectors.toList());
-            txJson.put("txDetails", txDetailJsons);
+                txDetailJson.put("amount", txDetail.getAmount());
+                if (txDetail.getType() == TxDetailType.Send.ordinal()){
+                    sendDetails.add(txDetailJson);
+                }
+                if (txDetail.getType() == TxDetailType.Receive.ordinal()){
+                    receiveDetails.add(txDetailJson);
+                }
+            }
+
+            txJson.put("sendDetails", sendDetails);
+            txJson.put("receiveDetails", receiveDetails);
+
             return txJson;
         }).collect(Collectors.toList());
 

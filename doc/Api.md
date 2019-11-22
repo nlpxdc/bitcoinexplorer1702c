@@ -188,44 +188,67 @@ Method：GET
 
 ResponseBody:  
 ```json
-[
-    {
-        "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
-        "time": 1573546755,
-        "fees": 0.00000001,
-        "totalOutput": 12.66901241,
-        "txDetails": [
-            {
-                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            },
-            {
-                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            }
-        ]
-    },
-    {
-        "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
-        "time": 1573546755,
-        "fees": 0.00000001,
-        "totalOutput": 12.66901241,
-        "txDetails": [
-            {
-                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            },
-            {
-                "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            }
-        ]
-    }
-]
+{
+    "total": 5678,
+    "pageSize": 30,
+    "currentPage": 2,
+    "list": [
+        {
+            "txid": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "time": 1573546755,
+            "fees": 0.00000001,
+            "totalOutput": 12.66901241,
+            "sendDetails": [
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                },
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                }
+            ],
+            "receiveDetails": [
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                },
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                }
+            ]
+        },
+        {
+            "txid": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "txhash": "456d535373c56e444c30324c124a6a3f351bccf3d6be294c4fbb839e3f324fcd",
+            "time": 1573546755,
+            "fees": 0.00000001,
+            "totalOutput": 12.66901241,
+            "sendDetails": [
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                },
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                }
+            ],
+            "receiveDetails": [
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                },
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                }
+            ]
+        }
+    ]
+}
 
 ```
 
@@ -244,10 +267,10 @@ Response 字段:
 | time   | Long   | 交易时间（出块时间）    |
 | fees   | double   | 交易费用    |
 | totalOutput   | double   | 交易总输出金额    |
-| txDetails   | array   | 交易详情    |
-| address   | array   | 地址    |
-| type   | array   | 类型（发送0，接受1）    |
-| amount   | array   | 金额    |
+| sendDetails   | array   | 发送列表    |
+| receiveDetails   | array   | 接受列表    |
+| address   | string   | 地址    |
+| amount   | double   | 金额    |
 
 ## 5. 交易详情
 
@@ -257,31 +280,31 @@ Method：GET
 ResponseBody:  
 ```json
 {
-        "txhash": "bc687317ed8d5f871b21e57498ba76349bea73837ddb719fde9876d0320c8ac5",
-        "time": 1573546755,
-        "fees":0.00117600,
-        "confirmations": 123,
-        "total_input": 4.50489410,
-        "total_output": 0.00117600,
-        "txDetails":[
-            {
-                "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            },
-            {
-                "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                "type": 0,
-                "amount": 0.01930000
-            }
-        ],
-        "status": 0,
-        "sizeOnDisk": 249,
-        "weight": 669,
-        "blockHeight": 603516,
-        "feePerByte": 472.289,
-        "feePerWeightUnit": 175.785
-    }
+    "txhash": "bc687317ed8d5f871b21e57498ba76349bea73837ddb719fde9876d0320c8ac5",
+    "time": 1573546755,
+    "fees":0.00117600,
+    "confirmations": 123,
+    "total_input": 4.50489410,
+    "total_output": 0.00117600,
+    "txDetails":[
+        {
+            "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+            "type": 0,
+            "amount": 0.01930000
+        },
+        {
+            "address":"1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+            "type": 0,
+            "amount": 0.01930000
+        }
+    ],
+    "status": 0,
+    "sizeOnDisk": 249,
+    "weight": 669,
+    "blockHeight": 603516,
+    "feePerByte": 472.289,
+    "feePerWeightUnit": 175.785
+}
 
 ```
 
@@ -366,15 +389,23 @@ ResponseBody:
             "time": 1573546755,
             "fees": 0.00000001,
             "totalOutput": 12.66901241,
-            "txDetail": [
+            "sendDetails": [
                 {
                     "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
                     "amount": 0.01930000
                 },
                 {
                     "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
+                    "amount": 0.01930000
+                }
+            ],
+            "receiveDetails": [
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                },
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
                     "amount": 0.01930000
                 }
             ]
@@ -385,15 +416,23 @@ ResponseBody:
             "time": 1573546755,
             "fees": 0.00000001,
             "totalOutput": 12.66901241,
-            "txDetails": [
+            "sendDetails": [
                 {
                     "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
                     "amount": 0.01930000
                 },
                 {
                     "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
-                    "type": 0,
+                    "amount": 0.01930000
+                }
+            ],
+            "receiveDetails": [
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
+                    "amount": 0.01930000
+                },
+                {
+                    "address": "1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL",
                     "amount": 0.01930000
                 }
             ]
@@ -422,9 +461,9 @@ Response 字段:
 | time   | long   | 交易时间（出块时间）    |
 | fees   | double   | 交易费用    |
 | totalOutput   | double   | 总接受    |
-| txDetails   | array   | 交易详细    |
+| sendDetails   | array   | 发送列表    |
+| receiveDetails   | array   | 接受列表    |
 | address   | string   | 地址    |
-| type   | enum   | 类型（发送0， 接受1）    |
 | amount   | double   | 金额    |
 
 ## 7. 搜索
