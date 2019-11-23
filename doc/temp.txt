@@ -11,3 +11,7 @@ rc.local
 exit 0
 ---------------------------------
 sudo chmod a+x /etc/rc.local
+
+sudo systemctl list-unit-files --type=service
+sudo systemctl is-enabled mysql
+sudo systemctl enable mysql
