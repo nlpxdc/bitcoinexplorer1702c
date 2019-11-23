@@ -1,1 +1,13 @@
 2N16oE62ZjAPup985dFBQYAuy5zpDraH7Hk
+
+sudo update-rc.d mysql defaults
+
+rc.local
+---------------------------------
+#!/bin/bash
+
+/usr/local/nginx/sbin/nginx
+
+exit 0
+---------------------------------
+sudo chmod a+x /etc/rc.local
